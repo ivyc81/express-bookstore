@@ -44,6 +44,7 @@ router.post("/", async function (req, res, next) {
 router.patch("/:isbn", async function (req, res, next) {
   try {
     const result = jsonschema.validate(req.body, updatebookSchema);
+
     if(!result.valid){
       let listOfErrors = result.errors.map(error => error.stack);
       throw new ExpressError(listOfErrors, 400)

@@ -57,7 +57,9 @@
       },
       "pages": {
         "$id": "#/properties/pages",
-        "type": "integer",
+        "type": "number",
+        "multipleOf": 1,
+        "minimum": 0,
         "title": "The Pages Schema",
         "default": 0,
         "examples": [
