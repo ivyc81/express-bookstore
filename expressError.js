@@ -6,10 +6,8 @@
 
 class ExpressError extends Error {
   constructor(message, status) {
-    if (Array.isArray(message)) { 
-      message = JSON.stringify(message)
-    }
-    super(message);
+    super();
+    this.message = message;
     this.status = status;
     console.error(this.stack);
   }
