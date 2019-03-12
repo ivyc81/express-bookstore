@@ -4,7 +4,8 @@ const Book = require("../models/book");
 const ExpressError = require("../expressError");
 
 const jsonschema = require('jsonschema');
-const createbookSchema = require('../schemas/createbook.json')
+const createbookSchema = require('../schemas/createbook.json');
+const updatebookSchema = require('../schemas/update.json');
 
 router.get("/", async function (req, res, next) {
   try {
@@ -42,6 +43,12 @@ router.post("/", async function (req, res, next) {
 
 router.patch("/:isbn", async function (req, res, next) {
   try {
+    const result = jsonschema.validate(req.body, updatebookSchema);
+    if(!result.valid){
+      let listOfErrors = result.errors.map(error => error.stack);
+      throw new ExpressError(listOfErrors, 400)
+    }
+
     const book = await Book.update(req.params.isbn, req.body);
     return res.json({ book });
   } catch (err) {
